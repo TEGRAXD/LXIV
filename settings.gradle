@@ -1,0 +1,3 @@
+include ':LXIV'
+include ':app'
+rootProject.name = "LXIV Project"
