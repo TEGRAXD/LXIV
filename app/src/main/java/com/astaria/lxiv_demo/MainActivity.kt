@@ -4,17 +4,23 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.DocumentsProvider
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toFile
 import androidx.core.net.toUri
+import androidx.documentfile.provider.DocumentFile
 import com.astaria.lxiv.lib.DecoderBuilder
 import com.astaria.lxiv.lib.EncoderBuilder
 import com.astaria.lxiv.lib.Flag
 import com.astaria.lxiv_demo.databinding.ActivityMainBinding
 import java.io.File
 import java.io.FileOutputStream
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,9 +64,42 @@ class MainActivity : AppCompatActivity() {
 //            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
 //            val xx = contentResolver.openOutputStream(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                // Null Folder
                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "LXIV")
                 contentValues.put(MediaStore.Images.Media.IS_PENDING, true)
-                val dirUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+                val imageContentValues = ContentValues()
+                imageContentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "LXIV")
+                imageContentValues.put(MediaStore.Images.ImageColumns.TITLE, "${Calendar.getInstance().time}")
+                imageContentValues.put(MediaStore.Images.ImageColumns.DISPLAY_NAME, "${Calendar.getInstance().time}")
+                imageContentValues.put(MediaStore.Images.ImageColumns.MIME_TYPE, "image/jpeg")
+                imageContentValues.put(MediaStore.Images.Media.IS_PENDING, true)
+
+                val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageContentValues) ?: throw NullPointerException()
+
+//                val file = File(dirUri?.path, "${Calendar.getInstance().time}.jpg")
+
+                val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
+                val outputStream = contentResolver.openOutputStream(imageUri)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream?.close()
+                imageContentValues.put(MediaStore.Images.Media.IS_PENDING, false)
+                contentResolver.update(imageUri, imageContentValues, null, null)
+
+//                val inps = contentResolver.openInputStream(imageUri)
+//                inps
+
+//                val xxx = File(inps)
+//                println(xxx.absolutePath)
+//                println(imageUri.path)
+//                MediaScannerConnection.scanFile(this, arrayOf(), arrayOf("*/*")
+//                ) { s: String, uri: Uri ->
+//                    println(s)
+//                    println(uri)
+//                }
+
+//                MediaScannerConnection.scanFile(this, arrayOf(dirUri?.path), arrayOf("*/*"), null)
 //                val file =
 //                if (file.exists()) {
 //                    println("EXIST")
@@ -74,14 +113,15 @@ class MainActivity : AppCompatActivity() {
                         println(directory.absolutePath)
                         if (!directory.exists()) print(directory.mkdirs())
 
-                        val file = File(directory.absolutePath, "KaGracia.jpg")
-                        file.setReadable(true)
-                        file.setWritable(true)
+                        val file = File(directory.absolutePath, "${Calendar.getInstance().time}.jpg")
+
                         val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
-//                        val outputStream = contentResolver.openOutputStream(file.toUri())
-                        val os = FileOutputStream(file)
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
-                        os.close()
+                        val outputStream = contentResolver.openOutputStream(file.toUri())
+//                        val os = FileOutputStream(file)
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                        outputStream?.close()
+                        // Update file
+                        MediaScannerConnection.scanFile(this, arrayOf(file.absolutePath), arrayOf("*/*"), null)
 //                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 //                        outputStream?.close()
 
