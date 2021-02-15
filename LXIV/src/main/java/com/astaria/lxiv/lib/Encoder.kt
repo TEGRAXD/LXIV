@@ -9,19 +9,29 @@ import java.io.ByteArrayOutputStream
 
 class Encoder(
     private val context: Context,
-    private val uri: Uri,
+    private val input: Any,
     private val quality: Int,
     private val compressFormat: Bitmap.CompressFormat,
-    private val encoderFlag: EncoderFlag? = null
+    private val flag: Flag? = null
 ) {
-    fun base64() : String {
-        val input = context.contentResolver.openInputStream(uri)
-        val image = BitmapFactory.decodeStream(input, null, null) ?: throw NullPointerException()
-
+    fun bitmapBase64() : String {
+        if (input !is Bitmap) throw IllegalArgumentException("Set Bitmap.")
         val baos = ByteArrayOutputStream()
-        image.compress(compressFormat, quality, baos)
+        input.compress(compressFormat, quality, baos)
         val imageBytes = baos.toByteArray()
 
-        return Base64.encodeToString(imageBytes, encoderFlag?.encoderFlag ?: EncoderFlag.DEFAULT.encoderFlag)
+        return Base64.encodeToString(imageBytes, flag?.encoderFlag ?: Flag.DEFAULT.encoderFlag)
+    }
+
+    fun uriBase64() : String {
+        if (input !is Uri) throw IllegalArgumentException("Set Drawable.")
+        val inputStream = context.contentResolver.openInputStream(input)
+        val imageBitmap = BitmapFactory.decodeStream(inputStream, null, null) ?: throw NullPointerException()
+
+        val baos = ByteArrayOutputStream()
+        imageBitmap.compress(compressFormat, quality, baos)
+        val imageByteArray = baos.toByteArray()
+
+        return Base64.encodeToString(imageByteArray, flag?.encoderFlag ?: Flag.DEFAULT.encoderFlag)
     }
 }

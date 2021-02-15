@@ -2,22 +2,25 @@ package com.astaria.lxiv.lib
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Base64
-import java.io.ByteArrayOutputStream
 
 class EncoderBuilder(
     private val context: Context
 ) : EncoderInterface {
-    private var uri: Uri? = null
+    private var input: Any? = null
     private var quality: Int? = null
     private var compressFormat: Bitmap.CompressFormat? = null
-    private var encoderFlag: EncoderFlag? = null
+    private var flag: Flag? = null
+
+    override fun setBitmap(bitmap: Bitmap?): EncoderInterface {
+        if (bitmap == null) throw IllegalArgumentException("Bitmap should not be null.")
+        this.input = bitmap
+        return this
+    }
 
     override fun setUri(uri: Uri?): EncoderInterface {
         if (uri == null) throw IllegalArgumentException("Uri should not be null.")
-        this.uri = uri
+        this.input = uri
         return this
     }
 
@@ -32,13 +35,25 @@ class EncoderBuilder(
         return this
     }
 
-    override fun setEncoderFlag(encoderFlag: EncoderFlag): EncoderInterface {
-        this.encoderFlag = encoderFlag
+    override fun setFlag(flag: Flag): EncoderInterface {
+        this.flag = flag
         return this
     }
 
-    @Throws(IllegalArgumentException::class)
     override fun build(): String {
-        return Encoder(context, uri ?: throw IllegalArgumentException("Uri should not be null."), quality ?: throw IllegalArgumentException("Quality should not be null."), compressFormat ?: throw IllegalArgumentException("Compress Format should not be null."), encoderFlag).base64()
+        return when (input) {
+            is Bitmap -> Encoder(context,
+                input ?: throw IllegalArgumentException("Either Bitmap or Uri should not be null. Please use setBitmap or setUri method first."),
+                quality ?: throw IllegalArgumentException("Quality should not be null."),
+                compressFormat ?: throw IllegalArgumentException("Compress Format should not be null."),
+                flag).bitmapBase64()
+            is Uri -> Encoder(context,
+                input ?: throw IllegalArgumentException("Either Bitmap or Uri should not be null. Please use setBitmap or setUri method first."),
+                quality ?: throw IllegalArgumentException("Quality should not be null."),
+                compressFormat ?: throw IllegalArgumentException("Compress Format should not be null."),
+                flag).uriBase64()
+            else -> throw IllegalArgumentException("Please use either method setBitmap or setUri.")
+        }
+
     }
 }

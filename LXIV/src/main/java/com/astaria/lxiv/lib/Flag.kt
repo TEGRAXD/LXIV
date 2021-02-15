@@ -3,7 +3,7 @@ package com.astaria.lxiv.lib
 import android.util.Base64
 import android.util.Base64OutputStream
 
-enum class EncoderFlag(val encoderFlag: Int) {
+enum class Flag(val encoderFlag: Int) {
 
     // Base64 Class All Rights Reserved By Android.
 

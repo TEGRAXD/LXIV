@@ -4,20 +4,17 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.astaria.lxiv.lib.DecoderBuilder
 import com.astaria.lxiv.lib.EncoderBuilder
-import com.astaria.lxiv.lib.EncoderFlag
+import com.astaria.lxiv.lib.Flag
 import com.astaria.lxiv_project.databinding.ActivityMainBinding
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.util.jar.Manifest
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 //            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
 //            val xx = contentResolver.openOutputStream(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "IF_DUAR_3")
+                contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "LXIV")
                 contentValues.put(MediaStore.Images.Media.IS_PENDING, true)
                 val dirUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 //                val file =
@@ -72,7 +69,17 @@ class MainActivity : AppCompatActivity() {
             } else {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                     if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        println("GRANTED")
+                        println("LANGSUNG GRANTED")
+                        val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "LXIV")
+                        println(directory.absolutePath)
+                        if (!directory.exists()) print(directory.mkdirs())
+
+                        val file = File(directory.absolutePath, "KaGracia.jpg")
+                        val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
+                        val outputStream = contentResolver.openOutputStream(file.toUri())
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                        outputStream?.close()
+
                     } else {
                         requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 10)
                     }
@@ -157,11 +164,15 @@ class MainActivity : AppCompatActivity() {
             10 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     println("GRANTED")
-                    val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "ELSE_DUAR_3")
+                    val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "LXIV")
                     println(directory.absolutePath)
-                    if (!directory.exists()) {
-                        print(directory.mkdirs())
-                    }
+                    if (!directory.exists()) print(directory.mkdirs())
+
+                    val file = File(directory.absolutePath, "KaGracia.jpg")
+                    val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
+                    val outputStream = contentResolver.openOutputStream(file.toUri())
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                    outputStream?.close()
                 } else {
                     println("The app was not allowed to write in your storage")
                 }
@@ -178,7 +189,7 @@ class MainActivity : AppCompatActivity() {
                         if (data == null) throw NullPointerException()
                         val uri = data.data
 
-                        binding.hasilConvert.setText(EncoderBuilder(this).setUri(uri).setQuality(100).setCompressFormat(Bitmap.CompressFormat.JPEG).setEncoderFlag(EncoderFlag.DEFAULT).build())
+                        binding.hasilConvert.setText(EncoderBuilder(this).setUri(uri).setQuality(100).setCompressFormat(Bitmap.CompressFormat.JPEG).setFlag(Flag.DEFAULT).build())
                     } catch (ex: Exception) {
                         ex.printStackTrace()
                     }
@@ -192,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                         if (data == null) throw NullPointerException()
                         val fpath = data.data ?: throw NullPointerException()
                         println(fpath)
-                        val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setEncoderFlag(EncoderFlag.DEFAULT).build()
+                        val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
 
                         val outputStream = contentResolver.openOutputStream(fpath)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
