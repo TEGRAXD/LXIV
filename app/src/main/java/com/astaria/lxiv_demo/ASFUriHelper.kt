@@ -1,6 +1,5 @@
-package com.astaria.lxiv_project
+package com.astaria.lxiv_demo
 
-import android.annotation.TargetApi
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor

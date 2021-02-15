@@ -1,4 +1,4 @@
-package com.astaria.lxiv_project
+package com.astaria.lxiv_demo
 
 import org.junit.Test
 

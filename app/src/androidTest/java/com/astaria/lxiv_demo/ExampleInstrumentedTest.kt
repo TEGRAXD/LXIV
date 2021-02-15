@@ -1,4 +1,4 @@
-package com.astaria.lxiv_project
+package com.astaria.lxiv_demo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
