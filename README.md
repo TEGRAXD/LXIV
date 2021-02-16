@@ -1,7 +1,7 @@
 LXIV
 ====
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.suganda8/lxiv/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.suganda8/lxiv)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.suganda8/lxiv/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.suganda8/lxiv)
 
 LXIV is Base64 encoder and decoder to convert Base64 String to Bitmap, or Bitmap to Base64. Using builder pattern to make sure your development easy and take less time.
 
