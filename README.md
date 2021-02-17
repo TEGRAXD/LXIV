@@ -40,9 +40,15 @@ For info on using the bleeding edge, see the Snapshots (soon) docs page.
 Usage
 -----
 
-Simple use cases will look something like this:
+Build encoder from uri to base64 string
 
-```java
+```kotlin
+// Code
+```
+
+Build decoder from base64 string to bitmap
+
+```kotlin
 // Code
 ```
 
@@ -54,8 +60,8 @@ Author
 ------
 Tegar Bangun Suganda
 
-@canaryv8 (Twitter)\
-@suganda8 (Github)
+[@canaryv8][3] (Twitter)\
+[@suganda8][4] (Github)
 
 License
 -------
@@ -63,4 +69,6 @@ The Apache License, Version 2.0. See the [LICENSE][2] file for details.
 
 [1]: https://github.com/suganda8/LXIV/releases
 [2]: https://github.com/suganda8/LXIV/blob/main/LICENSE
+[3]: https://twitter.com/canaryv8
+[4]: https://github.com/suganda8
 

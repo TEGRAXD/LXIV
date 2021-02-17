@@ -15,7 +15,7 @@ task androidSourcesJar(type: Jar) {
     }
 }
 
-tasks.withType(dokkaHtmlPartial.getClass()).configureEach {
+tasks.withType(dokkaHtml.getClass()).configureEach {
     pluginsMapConfiguration.set(
             ["org.jetbrains.dokka.base.DokkaBase": """{ "separateInheritedMembers": true}"""]
     )

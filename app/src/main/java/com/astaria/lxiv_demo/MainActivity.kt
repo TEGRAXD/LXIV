@@ -5,18 +5,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsProvider
 import android.provider.MediaStore
+import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toFile
 import androidx.core.net.toUri
-import androidx.documentfile.provider.DocumentFile
-import com.astaria.lxiv.lib.DecoderBuilder
-import com.astaria.lxiv.lib.EncoderBuilder
-import com.astaria.lxiv.lib.Flag
+import com.astaria.lxiv.DecoderBuilder
+import com.astaria.lxiv.EncoderBuilder
+import com.astaria.lxiv.LXIV
 import com.astaria.lxiv_demo.databinding.ActivityMainBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -39,32 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.changeStringButton.setOnClickListener {
 
-//            val projectDir = File(getExternalFilesDir(null), "LXIV")
-//            val projectImagesDir = File(projectDir.absolutePath, "Images")
-//            if (!projectDir.exists()) projectDir.mkdir()
-//            if (!projectImagesDir.exists()) projectImagesDir.mkdir()
-//
-//            println(projectImagesDir.absolutePath)
-//
-//            val file = File(projectImagesDir.absolutePath, "KaGracia.jpg")
-//            val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setEncoderFlag(EncoderFlag.DEFAULT).build()
-//            val outputStream = contentResolver.openOutputStream(file.toUri())
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-//            outputStream?.close()
-
-
-            println(getExternalFilesDir(null))
-            println(File.separator)
-            println(Environment.getDataDirectory().absolutePath)
-            println(Environment.DIRECTORY_PICTURES)
-            println(Environment.DIRECTORY_PICTURES)
-
-            // Create File
-            val contentValues = ContentValues()
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-//            val xx = contentResolver.openOutputStream(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                 // Null Folder
+                val contentValues = ContentValues()
                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "LXIV")
                 contentValues.put(MediaStore.Images.Media.IS_PENDING, true)
                 contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
@@ -78,53 +52,35 @@ class MainActivity : AppCompatActivity() {
 
                 val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageContentValues) ?: throw NullPointerException()
 
-//                val file = File(dirUri?.path, "${Calendar.getInstance().time}.jpg")
+                val bitmap = LXIV.createDecoder().asBitmap {
+                    it.base64String = binding.tietInput.text.toString()
+                    it.flag = Base64.DEFAULT
+                }
 
-                val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
                 val outputStream = contentResolver.openOutputStream(imageUri)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                 outputStream?.close()
                 imageContentValues.put(MediaStore.Images.Media.IS_PENDING, false)
                 contentResolver.update(imageUri, imageContentValues, null, null)
 
-//                val inps = contentResolver.openInputStream(imageUri)
-//                inps
-
-//                val xxx = File(inps)
-//                println(xxx.absolutePath)
-//                println(imageUri.path)
-//                MediaScannerConnection.scanFile(this, arrayOf(), arrayOf("*/*")
-//                ) { s: String, uri: Uri ->
-//                    println(s)
-//                    println(uri)
-//                }
-
-//                MediaScannerConnection.scanFile(this, arrayOf(dirUri?.path), arrayOf("*/*"), null)
-//                val file =
-//                if (file.exists()) {
-//                    println("EXIST")
-//                    file.delete()
-//                }
+                binding.imageView.setImageBitmap(bitmap)
             } else {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                     if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        println("LANGSUNG GRANTED")
                         val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "LXIV")
-                        println(directory.absolutePath)
                         if (!directory.exists()) print(directory.mkdirs())
 
                         val file = File(directory.absolutePath, "${Calendar.getInstance().time}.jpg")
-
-                        val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
+                        val bitmap = LXIV.createDecoder().asBitmap {
+                        }
                         val outputStream = contentResolver.openOutputStream(file.toUri())
-//                        val os = FileOutputStream(file)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                         outputStream?.close()
-                        // Update file
-                        MediaScannerConnection.scanFile(this, arrayOf(file.absolutePath), arrayOf("*/*"), null)
-//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-//                        outputStream?.close()
 
+                        // Scan file
+                        MediaScannerConnection.scanFile(this, arrayOf(file.absolutePath), arrayOf("*/*"), null)
+
+                        binding.imageView.setImageBitmap(bitmap)
                     } else {
                         requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 10)
                     }
@@ -210,15 +166,18 @@ class MainActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     println("GRANTED")
                     val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "LXIV")
-                    println(directory.absolutePath)
                     if (!directory.exists()) print(directory.mkdirs())
 
                     val file = File(directory.absolutePath, "KaGracia2.jpg")
-                    val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
-//                    val outputStream = contentResolver.openOutputStream(file.toUri())
+                    val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Base64.DEFAULT).buildAsBitmap()
                     val os = FileOutputStream(file)
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
                     os.close()
+
+                    // Scan file
+                    MediaScannerConnection.scanFile(this, arrayOf(file.absolutePath), arrayOf("*/*"), null)
+
+                    binding.imageView.setImageBitmap(bitmap)
                 } else {
                     println("The app was not allowed to write in your storage")
                 }
@@ -235,7 +194,13 @@ class MainActivity : AppCompatActivity() {
                         if (data == null) throw NullPointerException()
                         val uri = data.data
 
-                        binding.hasilConvert.setText(EncoderBuilder(this).setUri(uri).setQuality(100).setCompressFormat(Bitmap.CompressFormat.JPEG).setFlag(Flag.DEFAULT).build())
+                        // binding.hasilConvert.setText(EncoderBuilder(this).setUri(uri).setQuality(100).setCompressFormat(Bitmap.CompressFormat.JPEG).setFlag(Base64.DEFAULT).build())
+                        binding.hasilConvert.setText(LXIV.createEncoder().fromUri(baseContext) {
+                            it.input = uri
+                            it.quality = 100
+                            it.compressFormat = Bitmap.CompressFormat.JPEG
+                            it.flag = Base64.DEFAULT
+                        })
                     } catch (ex: Exception) {
                         ex.printStackTrace()
                     }
@@ -249,7 +214,7 @@ class MainActivity : AppCompatActivity() {
                         if (data == null) throw NullPointerException()
                         val fpath = data.data ?: throw NullPointerException()
                         println(fpath)
-                        val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Flag.DEFAULT).buildAsBitmap()
+                        val bitmap = DecoderBuilder().setBase64String(binding.tietInput.text.toString()).setFlag(Base64.DEFAULT).buildAsBitmap()
 
                         val outputStream = contentResolver.openOutputStream(fpath)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
