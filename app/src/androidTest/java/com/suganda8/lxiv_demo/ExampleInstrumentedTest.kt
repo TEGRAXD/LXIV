@@ -1,4 +1,4 @@
-package com.astaria.lxiv_demo
+package com.suganda8.lxiv_demo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.astaria.lxiv_project", appContext.packageName)
+        assertEquals("com.suganda8.lxiv_project", appContext.packageName)
     }
 }

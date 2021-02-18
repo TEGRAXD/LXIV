@@ -1,4 +1,4 @@
-package com.astaria.lxiv_demo
+package com.suganda8.lxiv_demo
 
 import android.content.ContentValues
 import android.content.Intent
@@ -11,10 +11,9 @@ import android.provider.MediaStore
 import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import com.astaria.lxiv.DecoderBuilder
-import com.astaria.lxiv.EncoderBuilder
-import com.astaria.lxiv.LXIV
-import com.astaria.lxiv_demo.databinding.ActivityMainBinding
+import com.suganda8.lxiv.DecoderBuilder
+import com.suganda8.lxiv.LXIV
+import com.suganda8.lxiv_demo.databinding.ActivityMainBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*

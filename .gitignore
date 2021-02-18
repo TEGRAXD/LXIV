@@ -7,6 +7,8 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/buildSrc/.gradle
+/buildSrc/build
 .DS_Store
 /build
 /captures

@@ -1,6 +1,4 @@
-package com.astaria.lxiv
-
-import android.graphics.Bitmap
+package com.suganda8.lxiv
 
 class LXIV {
     companion object {

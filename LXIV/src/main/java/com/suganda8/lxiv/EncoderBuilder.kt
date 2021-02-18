@@ -1,11 +1,10 @@
-package com.astaria.lxiv
+package com.suganda8.lxiv
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Base64
-import java.io.ByteArrayOutputStream
+import com.suganda8.lxiv.Encoder.Companion.bitmapBase64
+import com.suganda8.lxiv.Encoder.Companion.uriBase64
 
 class EncoderBuilder(
     private val context: Context? = null
@@ -18,29 +17,6 @@ class EncoderBuilder(
     companion object {
         inline fun fromBitmap(context: Context, block: (Encoder) -> Unit): String = Encoder(context).apply(block).bitmapBase64()
         inline fun fromUri(context: Context, block: (Encoder) -> Unit): String = Encoder(context).apply(block).uriBase64()
-
-        fun Encoder.bitmapBase64() : String {
-            if (input == null) throw IllegalArgumentException("Set input source first from either Bitmap or Uri.")
-            if (input !is Bitmap) throw IllegalArgumentException("Set input source from Bitmap.")
-            val baos = ByteArrayOutputStream()
-            (input as Bitmap).compress(compressFormat, quality ?: throw IllegalArgumentException("Quality should not be null."), baos)
-            val imageBytes = baos.toByteArray()
-
-            return Base64.encodeToString(imageBytes, flag ?: Base64.DEFAULT)
-        }
-
-        fun Encoder.uriBase64() : String {
-            if (input == null) throw IllegalArgumentException("Set input source first from either Bitmap or Uri.")
-            if (input !is Uri) throw IllegalArgumentException("Set Drawable.")
-            val inputStream = context.contentResolver.openInputStream(input as Uri)
-            val imageBitmap = BitmapFactory.decodeStream(inputStream, null, null) ?: throw NullPointerException()
-
-            val baos = ByteArrayOutputStream()
-            imageBitmap.compress(compressFormat, quality ?: throw IllegalArgumentException("Quality should not be null."), baos)
-            val imageByteArray = baos.toByteArray()
-
-            return Base64.encodeToString(imageByteArray, flag ?: Base64.DEFAULT)
-        }
     }
 
     fun setBitmap(bitmap: Bitmap?): EncoderBuilder {

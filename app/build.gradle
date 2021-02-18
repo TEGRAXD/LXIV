@@ -1,23 +1,24 @@
+import com.github.suganda8.lxiv.Configuration
+import com.github.suganda8.lxiv.Dependencies
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'androidx.navigation.safeargs.kotlin'
+//    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion Configuration.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.astaria.lxiv_demo"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Configuration.minSdkVersion
+        targetSdkVersion Configuration.targetSdkVersion
+        versionName Configuration.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildFeatures {
@@ -42,16 +43,17 @@ android {
 }
 
 dependencies {
+    implementation Dependencies.kotlinStdLib
+    implementation Dependencies.androidxCoreKtx
+    implementation Dependencies.androidxAppCompat
+    implementation Dependencies.materialComponents
+    implementation Dependencies.constraintLayout
+    implementation Dependencies.navigationFragmentKTX
+    implementation Dependencies.navigationUIKTX
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation Dependencies.junit4
+    androidTestImplementation Dependencies.androidxTestJunit
+    androidTestImplementation Dependencies.espressoCore
+
     implementation project(':LXIV')
 }

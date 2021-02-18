@@ -1,8 +1,8 @@
-package com.astaria.lxiv
+package com.suganda8.lxiv
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
+import com.suganda8.lxiv.Decoder.Companion.bitmap
+import com.suganda8.lxiv.Decoder.Companion.byteArray
 
 class DecoderBuilder {
     private var base64String: String? = null
@@ -11,15 +11,6 @@ class DecoderBuilder {
     companion object {
         inline fun asBitmap(block: (Decoder) -> Unit): Bitmap = Decoder().apply(block).bitmap()
         inline fun asByteArray(block: (Decoder) -> Unit): ByteArray = Decoder().apply(block).byteArray()
-
-        fun Decoder.bitmap() : Bitmap {
-            val imageBytes = Base64.decode(base64String ?: throw IllegalArgumentException("Base64 String should not be null."), flag ?: Base64.DEFAULT)
-            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        }
-
-        fun Decoder.byteArray() : ByteArray {
-            return Base64.decode(base64String ?: throw IllegalArgumentException("Base64 String should not be null."),flag ?: Base64.DEFAULT)
-        }
     }
 
     fun setBase64String(base64String: String?): DecoderBuilder {
