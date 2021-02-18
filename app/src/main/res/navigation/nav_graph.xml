@@ -16,6 +16,26 @@
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.suganda8.lxiv_demo.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+    </fragment>
+    <fragment
+        android:id="@+id/decoderFragment"
+        android:name="com.suganda8.lxiv_demo.decoder.DecoderFragment"
+        android:label="fragment_decoder"
+        tools:layout="@layout/fragment_decoder" >
+    </fragment>
+    <fragment
+        android:id="@+id/encoderFragment"
+        android:name="com.suganda8.lxiv_demo.encoder.EncoderFragment"
+        android:label="fragment_encoder"
+        tools:layout="@layout/fragment_encoder" >
+    </fragment>
 </navigation>

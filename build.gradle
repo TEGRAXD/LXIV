@@ -20,6 +20,9 @@ apply plugin: 'io.codearte.nexus-staging'
 apply plugin: 'org.jetbrains.dokka'
 
 buildscript {
+    ext {
+        kotlin_version = '1.4.30'
+    }
     repositories {
         google()
         jcenter()
@@ -34,7 +37,7 @@ buildscript {
     dependencies {
         classpath Dependencies.androidGradlePlugin
         classpath Dependencies.kotlinGradlePlugin
-//        classpath Dependencies.navigationSafeArgsGradlePlugin
+        classpath Dependencies.navigationSafeArgsGradlePlugin
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath Dependencies.gradleNexusStagingPlugin

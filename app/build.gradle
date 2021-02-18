@@ -22,7 +22,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-//    id 'androidx.navigation.safeargs.kotlin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -66,6 +66,8 @@ dependencies {
     implementation Dependencies.constraintLayout
     implementation Dependencies.navigationFragmentKTX
     implementation Dependencies.navigationUIKTX
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation Dependencies.junit4
     androidTestImplementation Dependencies.androidxTestJunit

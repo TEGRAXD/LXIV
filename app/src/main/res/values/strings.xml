@@ -16,4 +16,20 @@
 
 <resources>
     <string name="app_name">LXIV Demo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="welcome_fragment_one">Hi, there</string>
+    <string name="welcome_fragment_two">Welcome to LXIV Demo</string>
+    <string name="welcome_fragment_three">We really glad you\ntry our small project</string>
+    <string name="base64_string">Base64 String</string>
+    <string name="load_an_image">Load an Image</string>
+    <string name="fit_center">Fit Center</string>
+    <string name="center_crop">Center Crop</string>
+    <string name="base64_length">Base64 Length :</string>
+    <string name="decode_base64">Decode Base64</string>
+    <string name="image_view">Image View</string>
+    <string name="home">Home</string>
+    <string name="encoder">Encoder</string>
+    <string name="decoder">Decoder</string>
 </resources>
