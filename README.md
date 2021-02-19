@@ -43,20 +43,40 @@ Usage
 Build encoder from uri to base64 string
 
 ```kotlin
-// Code
+// Get uri from intent's data
+val uri = data.data
+
+// Encode Uri (You should do this in background)
+val base64EncodedString = LXIV.createEncoder().fromUri(requireContext()) {
+    // Input is depends, fromUri or fromBitmap.
+    it.input = uri
+    it.quality = 75
+    it.compressFormat = Bitmap.CompressFormat.JPEG
+    // You could leave or not setting up the flag
+    it.flag = Base64.DEFAULT
+}
 ```
 
 Build decoder from base64 string to bitmap
 
 ```kotlin
-// Code
+// Decode Base64 String
+val bitmap = LXIV.createDecoder().asBitmap {
+    // Set base64 string
+    it.base64String = binding.tietDecoderBase64StringFrDecoder.text.toString()
+    // You could leave or not setting up the flag
+    it.flag = Base64.DEFAULT
+}
+
+// Set bitmap into ImageView
+binding.imgvLoadedImageFrDecoder.setImageBitmap(bitmap)
 ```
 
 Status
 ------
 Version 1.0.0 is now released.
 
-Author
+Developer
 ------
 Tegar Bangun Suganda
 
@@ -65,7 +85,19 @@ Tegar Bangun Suganda
 
 License
 -------
-The Apache License, Version 2.0. See the [LICENSE][2] file for details.
+    Copyright (C) 2021 Tegar Bangun Suganda, ASTARIA.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
 [1]: https://github.com/suganda8/LXIV/releases
 [2]: https://github.com/suganda8/LXIV/blob/main/LICENSE
