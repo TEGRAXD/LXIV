@@ -25,6 +25,10 @@ jobs:
         run: |
           git fetch --unshallow
           sudo bash -c "echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
+          
+        # Make gradlew executable
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
         # Builds the release artifacts of the library
       - name: Release build
