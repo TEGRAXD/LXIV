@@ -14,10 +14,12 @@
  *    limitations under the License.
  */
 
-plugins {
-    `kotlin-dsl`
-}
+import org.gradle.kotlin.dsl.`kotlin-dsl`
 
 repositories {
     mavenCentral()
+}
+
+plugins {
+    `kotlin-dsl`
 }

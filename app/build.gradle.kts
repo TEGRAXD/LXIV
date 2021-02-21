@@ -14,21 +14,15 @@
  *    limitations under the License.
  */
 
+import Configuration
 import Dependencies
 
 plugins {
-    id("com.android.library")
+    id("com.android.application")
     id("kotlin-android")
-}
-
-ext {
-    set("PUBLISH_GROUP_ID", Configuration.artifactGroup)
-    set("PUBLISH_VERSION", Configuration.versionName)
-    set("PUBLISH_ARTIFACT_ID", Configuration.artifactLXIV)
-}
-
-apply {
-    from("${rootProject.projectDir}/scripts/publish-mavencentral.gradle")
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -38,6 +32,21 @@ android {
         minSdkVersion(Configuration.minSdkVersion)
         targetSdkVersion(Configuration.targetSdkVersion)
         versionName = Configuration.versionName
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
 
     compileOptions {
@@ -51,4 +60,16 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlinStdLib)
+    implementation(Dependencies.androidxCoreKtx)
+    implementation(Dependencies.androidxAppCompat)
+    implementation(Dependencies.materialComponents)
+    implementation(Dependencies.constraintLayout)
+    implementation(Dependencies.navigationFragmentKTX)
+    implementation(Dependencies.navigationUIKTX)
+
+    testImplementation(Dependencies.junit4)
+    androidTestImplementation(Dependencies.androidxTestJunit)
+    androidTestImplementation(Dependencies.espressoCore)
+
+    implementation(project(":LXIV"))
 }

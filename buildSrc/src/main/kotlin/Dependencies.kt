@@ -14,8 +14,6 @@
  *    limitations under the License.
  */
 
-package com.github.suganda8.lxiv
-
 private const val ANDROID_GRADLE_PLUGIN_VERSION = "4.1.2"
 private const val ANDROIDX_APPCOMPAT_VERSION = "1.2.0"
 private const val ANDROIDX_KTX_VERSION = "1.3.2"

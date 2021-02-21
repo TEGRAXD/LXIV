@@ -14,8 +14,6 @@
  *    limitations under the License.
  */
 
-package com.github.suganda8.lxiv
-
 object Configuration {
     const val compileSdkVersion = 30
     const val targetSdkVersion = 30

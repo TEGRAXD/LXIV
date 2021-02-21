@@ -14,23 +14,19 @@
  *    limitations under the License.
  */
 
-import com.github.suganda8.lxiv.Dependencies
+import Dependencies
 
-apply plugin: 'io.codearte.nexus-staging'
-apply plugin: 'org.jetbrains.dokka'
+apply(plugin = "io.codearte.nexus-staging")
+apply(plugin = "org.jetbrains.dokka")
 
 buildscript {
-    ext {
-        kotlin_version = "1.4.30"
-    }
+    val kotlin_version = "1.4.30"
 
     repositories {
         google()
         jcenter()
         mavenCentral()
-        maven {
-            url("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
-        }
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
     }
     dependencies {
         classpath(Dependencies.androidGradlePlugin)
@@ -48,13 +44,11 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
-        }
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
         jcenter()
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
