@@ -1,5 +1,5 @@
 /*
- *    Copyright (C) 2021 Tegar Bangun Suganda, ASTARIA.
+ *    Copyright 2021 Tegar Bangun Suganda, ASTARIA.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -49,11 +49,11 @@ class DecoderFragment : Fragment() {
 
     private fun setUpUI() {
         binding.btnDecoderCenterCropScaletypeFrDecoder.setOnClickListener {
-            binding.imgvLoadedImageFrDecoder.scaleType = ImageView.ScaleType.CENTER_CROP
+            binding.imgvImageLoadedFrDecoder.scaleType = ImageView.ScaleType.CENTER_CROP
         }
 
         binding.btnDecoderFitCenterScaletypeFrDecoder.setOnClickListener {
-            binding.imgvLoadedImageFrDecoder.scaleType = ImageView.ScaleType.FIT_CENTER
+            binding.imgvImageLoadedFrDecoder.scaleType = ImageView.ScaleType.FIT_CENTER
         }
 
         binding.btnDecoderCheckFrDecoder.setOnClickListener {
@@ -66,7 +66,7 @@ class DecoderFragment : Fragment() {
                     }
 
                     // Load bitmap to ImageView
-                    binding.imgvLoadedImageFrDecoder.setImageBitmap(bitmap)
+                    binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)
 
                     binding.tvEncodeBase64LengthFrDecoder.text = binding.tietDecoderBase64StringFrDecoder.text.toString().length.toString()
                 } catch (ex: Exception) {

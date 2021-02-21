@@ -1,5 +1,5 @@
 /*
- *    Copyright (C) 2021 Tegar Bangun Suganda, ASTARIA.
+ *    Copyright 2021 Tegar Bangun Suganda, ASTARIA.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,36 +18,38 @@ import com.github.suganda8.lxiv.Configuration
 import com.github.suganda8.lxiv.Dependencies
 
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 ext {
-    PUBLISH_GROUP_ID = Configuration.artifactGroup
-    PUBLISH_VERSION = Configuration.versionName
-    PUBLISH_ARTIFACT_ID = Configuration.artifactLXIV
+    set("PUBLISH_GROUP_ID", Configuration.artifactGroup)
+    set("PUBLISH_VERSION", Configuration.versionName)
+    set("PUBLISH_ARTIFACT_ID", Configuration.artifactLXIV)
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
+apply {
+    from("${rootProject.projectDir}/scripts/publish-mavencentral.gradle")
+}
 
 android {
-    compileSdkVersion Configuration.compileSdkVersion
+    compileSdkVersion(Configuration.compileSdkVersion)
 
     defaultConfig {
-        minSdkVersion Configuration.minSdkVersion
-        targetSdkVersion Configuration.targetSdkVersion
-        versionName Configuration.versionName
+        minSdkVersion(Configuration.minSdkVersion)
+        targetSdkVersion(Configuration.targetSdkVersion)
+        versionName = Configuration.versionName
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    implementation Dependencies.kotlinStdLib
+    implementation(Dependencies.kotlinStdLib)
 }

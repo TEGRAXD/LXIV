@@ -1,5 +1,5 @@
 /*
- *    Copyright (C) 2021 Tegar Bangun Suganda, ASTARIA.
+ *    Copyright 2021 Tegar Bangun Suganda, ASTARIA.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,27 +21,25 @@ apply plugin: 'org.jetbrains.dokka'
 
 buildscript {
     ext {
-        kotlin_version = '1.4.30'
+        kotlin_version = "1.4.30"
     }
+
     repositories {
         google()
         jcenter()
         mavenCentral()
         maven {
-            url 'https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev'
-            content {
-                includeGroup('org.jetbrains.dokka')
-            }
+            url("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
         }
     }
     dependencies {
-        classpath Dependencies.androidGradlePlugin
-        classpath Dependencies.kotlinGradlePlugin
-        classpath Dependencies.navigationSafeArgsGradlePlugin
+        classpath(Dependencies.androidGradlePlugin)
+        classpath(Dependencies.kotlinGradlePlugin)
+        classpath(Dependencies.navigationSafeArgsGradlePlugin)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath Dependencies.gradleNexusStagingPlugin
-        classpath Dependencies.dokka
+        classpath(Dependencies.gradleNexusStagingPlugin)
+        classpath(Dependencies.dokka)
     }
 
 }
@@ -51,10 +49,7 @@ allprojects {
         google()
         mavenCentral()
         maven {
-            url 'https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev'
-            content {
-                includeGroup('org.jetbrains.dokka')
-            }
+            url("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
         }
         jcenter()
     }

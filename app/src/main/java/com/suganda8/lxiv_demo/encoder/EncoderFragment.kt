@@ -1,5 +1,5 @@
 /*
- *    Copyright (C) 2021 Tegar Bangun Suganda, ASTARIA.
+ *    Copyright 2021 Tegar Bangun Suganda, ASTARIA.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -54,11 +54,11 @@ class EncoderFragment : Fragment() {
 
     private fun setUpUI() {
         binding.btnEncoderCenterCropScaletypeFrEncoder.setOnClickListener {
-            binding.imgvLoadedImageFrEncoder.scaleType = ImageView.ScaleType.CENTER_CROP
+            binding.imgvImageLoadedFrEncoder.scaleType = ImageView.ScaleType.CENTER_CROP
         }
 
         binding.btnEncoderFitCenterScaletypeFrEncoder.setOnClickListener {
-            binding.imgvLoadedImageFrEncoder.scaleType = ImageView.ScaleType.FIT_CENTER
+            binding.imgvImageLoadedFrEncoder.scaleType = ImageView.ScaleType.FIT_CENTER
         }
 
         binding.btnEncoderLoadAnImageFrEncoder.setOnClickListener {
@@ -84,7 +84,7 @@ class EncoderFragment : Fragment() {
                     // Get uri from intent's data
                     val uri = data.data
                     // Set image from uri
-                    binding.imgvLoadedImageFrEncoder.setImageURI(uri)
+                    binding.imgvImageLoadedFrEncoder.setImageURI(uri)
 
                     // Encode Uri (You should do this in background)
                     val base64EncodedString = LXIV.createEncoder().fromUri(requireContext()) {

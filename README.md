@@ -11,20 +11,28 @@ Download
 --------
 Download the source code from GitHub's [releases page][1] or using Gradle, Maven, Jitpack (soon).
 
-Gradle:
+Using Gradle (Project):
 
 ```gradle
 repositories {
-  google()
-  jcenter()
-}
-
-dependencies {
-  implementation 'com.github.suganda8:lxiv:1.0.0'
+    // Add Maven Central repository
+    mavenCentral()
 }
 ```
 
-Maven:
+then, add LXIV in Gradle (Module):
+
+```gradle
+dependencies {
+    // Using Gradle Groovy DSL
+    implementation 'com.github.suganda8:lxiv:1.0.0'
+
+    // Using Gradle Kotlin DSL
+    // implementation("com.github.suganda8:lxiv:1.0.0")
+}
+```
+
+Using Maven:
 
 ```xml
 <dependency>
@@ -69,7 +77,7 @@ val bitmap = LXIV.createDecoder().asBitmap {
 }
 
 // Set bitmap into ImageView
-binding.imgvLoadedImageFrDecoder.setImageBitmap(bitmap)
+binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)
 ```
 
 Status
@@ -85,7 +93,7 @@ Tegar Bangun Suganda
 
 License
 -------
-    Copyright (C) 2021 Tegar Bangun Suganda, ASTARIA.
+    Copyright 2021 Tegar Bangun Suganda, ASTARIA.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
