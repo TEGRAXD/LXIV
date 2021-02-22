@@ -70,6 +70,5 @@ dependencies {
     testImplementation(Dependencies.junit4)
     androidTestImplementation(Dependencies.androidxTestJunit)
     androidTestImplementation(Dependencies.espressoCore)
-
-    implementation(project(":LXIV"))
+    implementation(project(":lxiv"))
 }

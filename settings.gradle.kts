@@ -14,5 +14,5 @@
  *    limitations under the License.
  */
 
-include (":app", ":LXIV")
+include (":app", ":lxiv")
 rootProject.name = "LXIV Demo"
