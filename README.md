@@ -25,10 +25,10 @@ then, add LXIV in Gradle (Module):
 ```gradle
 dependencies {
     // Using Gradle Groovy DSL
-    implementation 'com.github.suganda8:lxiv:1.0.0'
+    implementation 'com.github.suganda8:lxiv:1.0.1'
 
     // Using Gradle Kotlin DSL
-    // implementation("com.github.suganda8:lxiv:1.0.0")
+    // implementation("com.github.suganda8:lxiv:1.0.1")
 }
 ```
 
@@ -38,7 +38,7 @@ Using Maven:
 <dependency>
   <groupId>com.github.suganda8</groupId>
   <artifactId>lxiv</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>aar</type>
 </dependency>
 ```
@@ -82,7 +82,7 @@ binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)
 
 Status
 ------
-Version 1.0.0 is now released.
+Version 1.0.1 is now released.
 
 Developer
 ------
