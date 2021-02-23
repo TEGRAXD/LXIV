@@ -27,6 +27,7 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections

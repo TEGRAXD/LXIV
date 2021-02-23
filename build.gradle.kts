@@ -21,8 +21,6 @@ apply(plugin = "io.codearte.nexus-staging")
 apply(plugin = "org.jetbrains.dokka")
 
 buildscript {
-    val kotlin_version = "1.4.30"
-
     repositories {
         google()
         jcenter()

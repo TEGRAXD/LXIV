@@ -17,6 +17,7 @@
 package com.suganda8.lxiv_demo.decoder
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Base64
 import androidx.fragment.app.Fragment
@@ -24,10 +25,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.suganda8.lxiv.Decoder.Companion.save
 import com.suganda8.lxiv.LXIV
 import com.suganda8.lxiv_demo.R
 import com.suganda8.lxiv_demo.databinding.FragmentDecoderBinding
 import com.suganda8.lxiv_demo.encoder.EncoderFragment
+import java.util.*
 
 class DecoderFragment : Fragment() {
     private lateinit var binding: FragmentDecoderBinding
@@ -58,20 +61,18 @@ class DecoderFragment : Fragment() {
 
         binding.btnDecoderCheckFrDecoder.setOnClickListener {
             if (binding.tietDecoderBase64StringFrDecoder.text.toString().isNotEmpty()) {
-                try {
-                    // Decode Base64 String
-                    val bitmap = LXIV.createDecoder().asBitmap {
-                        it.base64String = binding.tietDecoderBase64StringFrDecoder.text.toString()
-                        it.flag = Base64.DEFAULT
-                    }
-
-                    // Load bitmap to ImageView
-                    binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)
-
-                    binding.tvEncodeBase64LengthFrDecoder.text = binding.tietDecoderBase64StringFrDecoder.text.toString().length.toString()
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
+                // Decode Base64 String
+                val bitmap = LXIV.createDecoder().asBitmap {
+                    it.base64String = binding.tietDecoderBase64StringFrDecoder.text.toString()
+                    it.flag = Base64.DEFAULT
                 }
+
+                bitmap.save(requireContext(), null, name = Calendar.getInstance().time.toString(), Bitmap.CompressFormat.JPEG, 75)
+
+                // Load bitmap to ImageView
+                binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)
+
+                binding.tvEncodeBase64LengthFrDecoder.text = binding.tietDecoderBase64StringFrDecoder.text.toString().length.toString()
             }
 
         }

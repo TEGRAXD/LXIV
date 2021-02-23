@@ -51,4 +51,5 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlinStdLib)
+    implementation(Dependencies.androidxCoreKtx)
 }
