@@ -29,8 +29,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -40,9 +42,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.suganda8.lxiv.DecoderBuilder
 import com.suganda8.lxiv.LXIV
 import com.suganda8.lxiv_demo.databinding.ActivityMainBinding
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.coroutines.coroutineContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpUI() {
-        NavigationUI.setupWithNavController(binding.bnvMainBottomNavigationAcMain, navController)
+        setUpTransitionBNV()
 
         // Setup Top Level Destination + ActionBar
         /*
@@ -79,5 +83,41 @@ class MainActivity : AppCompatActivity() {
 
             NavigationUI.navigateUp(navHostFragment.navController, appBarConfiguration)
         */
+    }
+
+    private fun setUpTransitionBNV() {
+        // Setup Enter, Exit, Pop Enter, and Pop Exit in NavOptions.Builder to override later.
+        val navOptions = NavOptions.Builder().apply {
+            setEnterAnim(R.anim.nav_default_enter_anim)
+            setExitAnim(R.anim.nav_default_exit_anim)
+            setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
+            setPopExitAnim(R.anim.nav_default_pop_exit_anim)
+        }.build()
+
+        // Java using NavigationUI directly
+        // NavigationUI.setupWithNavController(binding.bnvMainBottomNavigationAcMain, navController)
+
+        // Kotlin using BottomNavigationView and calling setUpWithNavController
+        binding.bnvMainBottomNavigationAcMain.setupWithNavController(navController)
+
+        // Overriding transition
+        binding.bnvMainBottomNavigationAcMain.setOnNavigationItemSelectedListener { item ->
+            if (binding.bnvMainBottomNavigationAcMain.selectedItemId == item.itemId) {
+                lifecycleScope.launch(Dispatchers.Main) {
+                    if (navController.graph.findNode(item.itemId) != null) {
+                        navController.navigate(item.itemId, null, navOptions)
+                    }
+                    item.isEnabled = false
+                    delay(1000)
+                    item.isEnabled = true
+                }
+            } else {
+                if (navController.graph.findNode(item.itemId) != null) {
+                    navController.navigate(item.itemId, null, navOptions)
+                    return@setOnNavigationItemSelectedListener true
+                }
+            }
+            false
+        }
     }
 }

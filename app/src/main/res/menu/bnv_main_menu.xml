@@ -15,24 +15,25 @@
   ~    limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- itemId should same with your Navigation Graph Fragment's Id -->
     <!-- menuCategory="secondary" allow you to add to back stack -->
 
     <item android:id="@+id/welcomeFragment"
         android:icon="@drawable/ic_action_home"
-        android:menuCategory="secondary"
-        android:title="@string/home"/>
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
 
     <item android:id="@+id/encoderFragment"
         android:icon="@drawable/ic_action_lock"
-        android:menuCategory="secondary"
-        android:title="@string/encoder"/>
+        android:title="@string/encoder"
+        app:showAsAction="ifRoom" />
 
     <item android:id="@+id/decoderFragment"
         android:icon="@drawable/ic_action_lock_open"
-        android:menuCategory="secondary"
-        android:title="@string/decoder" />
+        android:title="@string/decoder"
+        app:showAsAction="ifRoom" />
 
 </menu>

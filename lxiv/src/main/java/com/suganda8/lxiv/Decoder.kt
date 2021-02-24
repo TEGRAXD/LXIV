@@ -100,7 +100,7 @@ class Decoder(
                         true
                     } else {
                         println("ELSE - SDK INT >= VERSION_CODES M")
-                        false
+                        throw SecurityException("The app was not allowed to write in your storage")
                     }
                 } else {
                     println("SDK INT - KURANG DARI VERSION CODE M")
@@ -123,7 +123,7 @@ class Decoder(
                         true
                     } else {
                         println("ELSE - SDK INT KURANG DARI VERSION_CODES M")
-                        false
+                        throw SecurityException("The app was not allowed to write in your storage")
                     }
                 }
             }

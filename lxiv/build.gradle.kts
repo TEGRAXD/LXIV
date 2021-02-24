@@ -14,8 +14,6 @@
  *    limitations under the License.
  */
 
-import Dependencies
-
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -51,5 +49,5 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlinStdLib)
-    implementation(Dependencies.androidxCoreKtx)
+    implementation(Dependencies.androidxCoreKTX)
 }

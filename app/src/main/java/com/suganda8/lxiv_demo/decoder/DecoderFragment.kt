@@ -30,6 +30,7 @@ import com.suganda8.lxiv.LXIV
 import com.suganda8.lxiv_demo.R
 import com.suganda8.lxiv_demo.databinding.FragmentDecoderBinding
 import com.suganda8.lxiv_demo.encoder.EncoderFragment
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DecoderFragment : Fragment() {
@@ -67,7 +68,8 @@ class DecoderFragment : Fragment() {
                     it.flag = Base64.DEFAULT
                 }
 
-                bitmap.save(requireContext(), null, name = Calendar.getInstance().time.toString(), Bitmap.CompressFormat.JPEG, 75)
+                // Save file
+                bitmap.save(requireContext(), null, name = SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(Calendar.getInstance().time as Date).toString(), Bitmap.CompressFormat.JPEG, 75)
 
                 // Load bitmap to ImageView
                 binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)
