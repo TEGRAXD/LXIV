@@ -17,19 +17,15 @@
 package com.suganda8.lxiv
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
 import com.suganda8.lxiv.Decoder.Companion.bitmap
-import com.suganda8.lxiv.Decoder.Companion.bitmapExecute
 import com.suganda8.lxiv.Decoder.Companion.byteArray
-import com.suganda8.lxiv.Decoder.Companion.save
 
 class DecoderBuilder {
     private var base64String: String? = null
     private var flag: Int? = null
 
     companion object {
-        inline fun asBitmap(block: (Decoder) -> Unit): Bitmap = Decoder().apply(block).bitmap().bitmapExecute()
+        inline fun asBitmap(block: (Decoder) -> Unit): Bitmap = Decoder().apply(block).bitmap()
         inline fun asByteArray(block: (Decoder) -> Unit): ByteArray = Decoder().apply(block).byteArray()
     }
 
@@ -45,7 +41,7 @@ class DecoderBuilder {
     }
 
     fun buildAsBitmap(): Bitmap {
-        return Decoder(base64String ?: throw IllegalArgumentException("Base64 String should not be null."), flag).bitmap().bitmapExecute()
+        return Decoder(base64String ?: throw IllegalArgumentException("Base64 String should not be null."), flag).bitmap()
     }
 
     fun buildAsByteArray(): ByteArray {

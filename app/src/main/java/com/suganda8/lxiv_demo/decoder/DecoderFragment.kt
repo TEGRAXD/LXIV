@@ -16,20 +16,17 @@
 
 package com.suganda8.lxiv_demo.decoder
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Base64
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.suganda8.lxiv.Decoder.Companion.save
+import androidx.fragment.app.Fragment
+import com.suganda8.lxiv.Decoder.Companion.saveImage
 import com.suganda8.lxiv.LXIV
-import com.suganda8.lxiv_demo.R
 import com.suganda8.lxiv_demo.databinding.FragmentDecoderBinding
-import com.suganda8.lxiv_demo.encoder.EncoderFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -68,8 +65,11 @@ class DecoderFragment : Fragment() {
                     it.flag = Base64.DEFAULT
                 }
 
-                // Save file
-                bitmap.save(requireContext(), null, name = SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(Calendar.getInstance().time as Date).toString(), Bitmap.CompressFormat.JPEG, 75)
+                // Save image as file
+                bitmap.saveImage(requireContext(),
+                        name = SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault()).format(Calendar.getInstance().time as Date).toString(),
+                        compressFormat = Bitmap.CompressFormat.JPEG,
+                        quality = 75)
 
                 // Load bitmap to ImageView
                 binding.imgvImageLoadedFrDecoder.setImageBitmap(bitmap)

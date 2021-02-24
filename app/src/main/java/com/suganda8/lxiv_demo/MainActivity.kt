@@ -16,37 +16,15 @@
 
 package com.suganda8.lxiv_demo
 
-import android.content.ContentValues
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.media.MediaScannerConnection
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Base64
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.suganda8.lxiv.DecoderBuilder
-import com.suganda8.lxiv.LXIV
 import com.suganda8.lxiv_demo.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
-import java.io.File
-import java.io.FileOutputStream
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -103,14 +81,7 @@ class MainActivity : AppCompatActivity() {
         // Overriding transition
         binding.bnvMainBottomNavigationAcMain.setOnNavigationItemSelectedListener { item ->
             if (binding.bnvMainBottomNavigationAcMain.selectedItemId == item.itemId) {
-                lifecycleScope.launch(Dispatchers.Main) {
-                    if (navController.graph.findNode(item.itemId) != null) {
-                        navController.navigate(item.itemId, null, navOptions)
-                    }
-                    item.isEnabled = false
-                    delay(1000)
-                    item.isEnabled = true
-                }
+                // Refreshing page
             } else {
                 if (navController.graph.findNode(item.itemId) != null) {
                     navController.navigate(item.itemId, null, navOptions)
