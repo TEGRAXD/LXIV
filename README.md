@@ -43,7 +43,7 @@ Using Maven:
 </dependency>
 ```
 
-For info on using the bleeding edge, see the Snapshots (soon) docs page.
+See the [Snapshots version][5].
 
 Usage
 -----
@@ -86,7 +86,9 @@ Version 1.0.1 is now released.
 
 Developer
 ------
+```
 Tegar Bangun Suganda
+```
 
 [@canaryv8][3] (Twitter)\
 [@suganda8][4] (Github)
@@ -111,4 +113,4 @@ License
 [2]: https://github.com/suganda8/LXIV/blob/main/LICENSE
 [3]: https://twitter.com/canaryv8
 [4]: https://github.com/suganda8
-
+[5]: https://oss.sonatype.org/content/repositories/snapshots/com/github/suganda8/lxiv/

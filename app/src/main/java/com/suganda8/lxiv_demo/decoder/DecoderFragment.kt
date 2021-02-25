@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.suganda8.lxiv.Decoder.Companion.saveImage
 import com.suganda8.lxiv.LXIV
 import com.suganda8.lxiv_demo.databinding.FragmentDecoderBinding
 import java.text.SimpleDateFormat
@@ -66,7 +65,8 @@ class DecoderFragment : Fragment() {
                 }
 
                 // Save image as file
-                bitmap.saveImage(requireContext(),
+                LXIV.saveImage(requireContext(),
+                        bitmap = bitmap,
                         name = SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault()).format(Calendar.getInstance().time as Date).toString(),
                         compressFormat = Bitmap.CompressFormat.JPEG,
                         quality = 75)
