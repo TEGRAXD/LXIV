@@ -22,6 +22,12 @@ import android.net.Uri
 import com.suganda8.lxiv.Encoder.Companion.bitmapBase64
 import com.suganda8.lxiv.Encoder.Companion.uriBase64
 
+/**
+ * Encoder builder
+ *
+ * @property context
+ * @constructor Create empty Encoder builder
+ */
 class EncoderBuilder(
     private val context: Context? = null
 ) {
@@ -35,34 +41,69 @@ class EncoderBuilder(
         inline fun fromUri(context: Context, block: (Encoder) -> Unit): String = Encoder(context).apply(block).uriBase64()
     }
 
+    /**
+     * Set bitmap
+     *
+     * @param bitmap
+     * @return
+     */
     fun setBitmap(bitmap: Bitmap?): EncoderBuilder {
         if (bitmap == null) throw IllegalArgumentException("Bitmap should not be null.")
         this.input = bitmap
         return this
     }
 
+    /**
+     * Set uri
+     *
+     * @param uri
+     * @return
+     */
     fun setUri(uri: Uri?): EncoderBuilder {
         if (uri == null) throw IllegalArgumentException("Uri should not be null.")
         this.input = uri
         return this
     }
 
+    /**
+     * Set quality
+     *
+     * @param quality
+     * @return
+     */
     fun setQuality(quality: Int): EncoderBuilder {
         if (quality < 0 || quality > 100) throw IllegalArgumentException("Quality should be around 0 to 100.")
         this.quality = quality
         return this
     }
 
+    /**
+     * Set compress format
+     *
+     * @param compressFormat
+     * @return
+     */
     fun setCompressFormat(compressFormat: Bitmap.CompressFormat): EncoderBuilder {
         this.compressFormat = compressFormat
         return this
     }
 
+    /**
+     * Set flag
+     *
+     * @param flag
+     * @return
+     */
     fun setFlag(flag: Int?): EncoderBuilder {
         this.flag = flag
         return this
     }
 
+    /**
+     * Build
+     *
+     * @return
+     */
     fun build(): String {
         return when (input) {
             is Bitmap -> Encoder(context ?: throw IllegalArgumentException("Context should not be null."),

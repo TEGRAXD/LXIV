@@ -23,6 +23,16 @@ import android.net.Uri
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 
+/**
+ * Encoder
+ *
+ * @property context
+ * @property input
+ * @property quality
+ * @property compressFormat
+ * @property flag
+ * @constructor Create empty Encoder
+ */
 class Encoder(
     private val context: Context,
     var input: Any? = null,

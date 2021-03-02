@@ -20,6 +20,11 @@ import android.graphics.Bitmap
 import com.suganda8.lxiv.Decoder.Companion.bitmap
 import com.suganda8.lxiv.Decoder.Companion.byteArray
 
+/**
+ * Decoder builder
+ *
+ * @constructor Create empty Decoder builder
+ */
 class DecoderBuilder {
     private var base64String: String? = null
     private var flag: Int? = null
@@ -29,21 +34,43 @@ class DecoderBuilder {
         inline fun asByteArray(block: (Decoder) -> Unit): ByteArray = Decoder().apply(block).byteArray()
     }
 
+    /**
+     * Set base64string
+     *
+     * @param base64String
+     * @return
+     */
     fun setBase64String(base64String: String?): DecoderBuilder {
         if (base64String.isNullOrEmpty()) throw IllegalArgumentException("Base64 String should not be null.")
         this.base64String = base64String
         return this
     }
 
+    /**
+     * Set flag
+     *
+     * @param flag
+     * @return
+     */
     fun setFlag(flag: Int?): DecoderBuilder {
         this.flag = flag
         return this
     }
 
+    /**
+     * Build as bitmap
+     *
+     * @return
+     */
     fun buildAsBitmap(): Bitmap {
         return Decoder(base64String ?: throw IllegalArgumentException("Base64 String should not be null."), flag).bitmap()
     }
 
+    /**
+     * Build as byte array
+     *
+     * @return
+     */
     fun buildAsByteArray(): ByteArray {
         return Decoder(base64String ?: throw IllegalArgumentException("Base64 String should not be null."), flag).byteArray()
     }

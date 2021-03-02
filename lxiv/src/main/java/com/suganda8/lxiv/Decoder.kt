@@ -16,22 +16,17 @@
 
 package com.suganda8.lxiv
 
-import android.Manifest
-import android.content.ContentValues
-import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.MediaScannerConnection
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Base64
-import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import java.io.File
-import java.io.FileOutputStream
 
+/**
+ * Decoder
+ *
+ * @property base64String
+ * @property flag
+ * @constructor Create empty Decoder
+ */
 class Decoder(
     var base64String: String? = null,
     var flag: Int? = null

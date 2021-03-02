@@ -27,10 +27,13 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.suganda8.lxiv.Decoder.Companion.saveImage
 import java.io.File
-import java.io.FileOutputStream
 
+/**
+ * LXIV
+ *
+ * @constructor Create empty LXIV
+ */
 class LXIV {
     companion object {
         fun createEncoder() : EncoderBuilder.Companion = EncoderBuilder
@@ -52,7 +55,6 @@ class LXIV {
 
                 val imageUri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageContentValues) ?: throw NullPointerException()
 
-                // val bitmap = saveImage
                 val outputStream = context.contentResolver.openOutputStream(imageUri)
                 bitmap.compress(compressFormat, quality, outputStream)
                 outputStream?.close()
@@ -71,7 +73,6 @@ class LXIV {
                                 else -> "webp"
                             }
                         }")
-                        //val bitmap = this
                         val os = context.contentResolver.openOutputStream(file.toUri())
                         bitmap.compress(compressFormat, quality, os)
                         os?.close()
@@ -91,9 +92,7 @@ class LXIV {
                                 else -> "webp"
                             }
                         }")
-                        //val bitmap = this
                         val os = context.contentResolver.openOutputStream(file.toUri())
-                        // val os = FileOutputStream(file)
                         bitmap.compress(compressFormat, quality, os)
                         os?.close()
                         MediaScannerConnection.scanFile(context, arrayOf(file.absolutePath), arrayOf("*/*"), null)
